@@ -106,7 +106,7 @@ source $ZSH/oh-my-zsh.sh
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias tt='ls -ltrh'
+alias tt='ls -ltrha'
 alias reloadbash='source ~/.zshrc'
 
 #View log auth  with less
@@ -126,6 +126,46 @@ function logauth-tial {
 		tail -f /var/log/IBSng/RADIUS/auth.log
 	else
 		tail -f /var/log/IBSng/RADIUS/auth.log | grep -i $1
+	fi
+}
+
+
+#View log Policy Error  with less
+function logpolicyerror-less {
+	if [[ $1 = "" ]]
+	then
+		less /var/log/IBSng/POLICY_WORKER/error.log
+	else
+		less /var/log/IBSng/POLICY_WORKER/error.log | grep -i -B3 -A25 $1
+	fi
+}
+
+#View log Policy Error with tail
+function logpolicyerror-tial {
+	if [[ $1 = "" ]]
+	then
+		tail -f /var/log/IBSng/POLICY_WORKER/error.log
+	else
+		tail -f /var/log/IBSng/POLICY_WORKER/error.log | grep -i $1
+	fi
+}
+#View log Consol  with less
+function logconsol-less {
+	if [[ $1 = "" ]]
+	then
+		less /var/log/IBSng/MAIN/console.log
+	else
+		less /var/log/IBSng/MAIN/console.log | grep -i -B3 -A25 $1
+	fi
+}
+
+#View log Consol  with tail
+function logconsol-tial {
+	if [[ $1 = "" ]]
+	then
+		tail -f /var/log/IBSng/MAIN/console.log
+	else
+		tail -f /var/log/IBSng/MAIN/console.log | grep -i $1
 	fi
 }
 
