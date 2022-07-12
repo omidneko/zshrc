@@ -120,7 +120,7 @@ function logauth-less {
 }
 
 #View log auth with tail
-function logauth-tial {
+function logauth-tail {
 	if [[ $1 = "" ]]
 	then
 		tail -f /var/log/IBSng/RADIUS/auth.log
@@ -141,7 +141,7 @@ function logpolicyerror-less {
 }
 
 #View log Policy Error with tail
-function logpolicyerror-tial {
+function logpolicyerror-tail {
 	if [[ $1 = "" ]]
 	then
 		tail -f /var/log/IBSng/POLICY_WORKER/error.log
@@ -160,7 +160,7 @@ function logconsol-less {
 }
 
 #View log Consol  with tail
-function logconsol-tial {
+function logconsol-tail {
 	if [[ $1 = "" ]]
 	then
 		tail -f /var/log/IBSng/MAIN/console.log
