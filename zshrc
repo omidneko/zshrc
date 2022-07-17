@@ -202,6 +202,7 @@ function ss {
 #				sudo apt install sshpass
 #			fi
 #	else
+
 			ip=$1
 			port=$2
 			user=$3
@@ -211,34 +212,33 @@ function ss {
 				read ip
 				echo -n "Enter Port(Defualt 22) : "
 				       read port
-				       if [[ $port == '' ]] 
-				       then port="22" 
+				       if [[ $port == '' ]]
+				       then port="22"
 				       fi
 				echo -n "Enter Username(Defualt root) : "
 				       read user
-				       if [[ $user == '' ]] 
-				       then user="root" 
+				       if [[ $user == '' ]]
+				       then user="root"
+					fi
 				echo -n "Enter Password : "
 					read pass
-				       fi
 
-		                scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
-		                ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
-				#sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -v -p $port
+			        sshpass -p $pass scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
+		                #ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
+				sshpass -p $pass ssh -o StrictHostKeyChecking=no -p$port -t $user@$ip -v "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
 
 			else
 			        if [[ $2 == '' ]]
 			        then port="22"
 				fi
-			        if [[ $3 == '' ]] 
-			        then user="root" 
+			        if [[ $3 == '' ]]
+			        then user="root"
 			        fi
 				echo -n "Enter Password : "
                                         read pass
-
-			        scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
-				ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
-				#sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -v -p $port
+			        sshpass -p $pass scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
+				#ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
+				sshpass -p $pass ssh -o StrictHostKeyChecking=no -p$port -t $user@$ip -v "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
 
 			fi
 #	fi
