@@ -108,6 +108,7 @@ alias la='ls -A'
 alias l='ls -CF'
 alias tt='ls -ltrha'
 alias reloadbash='source ~/.zshrc'
+alias configibs='nano /usr/local/IBSng/config/IBSng.conf'
 
 #View log auth  with less
 function logauth-less {
@@ -169,39 +170,78 @@ function logconsol-tail {
 	fi
 }
 
+
+#check sshpass
+function ch {
+
+	#checke=$(sudo apt list --installed | grep -i $1 | grep -i installed | wc -l)
+#	checke=$(ps -aux | grep -i $1 | wc -l)
+	checke=$(dpkg -l | grep -i $1| wc -l)
+	if [[ $checke == "0" ]]
+	then
+		echo "Not Installed"
+	else
+		echo "Installed"
+	fi
+
+}
 #ssh with alias
 function ss {
-	ip=$1
-	port=$2
-	user=$3
-	if [[ $ip == "" ]]
-	then
-		echo -n "Enter IP : "
-		read ip
-		echo -n "Enter Port(Defualt 22) : "
-		       read port
-		       if [[ $port == '' ]] 
-		       then port="22" 
-		       fi
-		echo -n "Enter Username(Defualt root) : "
-		       read user
-		       if [[ $user == '' ]] 
-		       then user="root" 
-		       fi
 
-                scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
-                ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
+# checke=$(sudo apt list --installed | grep -i sshpass | grep -i installed | wc -l)
+# checke=$(ps -aux | grep -i sshpass | wc -l)
+#checke=$(dpkg -l | grep -i sshpass | wc -l)
+#        if [[ $checke == "0" ]]
+#        then
+#                echo -n "sshpass Not Installed. "
+#		echo -n "For Install Press Enter. "
+#		echo -n "For Cancel Install press q & Enter : "
+#		read inst
+#			if [[ $inst == "" ]]
+#			then
+#				sudo apt install sshpass
+#			fi
+#	else
+			ip=$1
+			port=$2
+			user=$3
+			if [[ $ip == "" ]]
+			then
+				echo -n "Enter IP : "
+				read ip
+				echo -n "Enter Port(Defualt 22) : "
+				       read port
+				       if [[ $port == '' ]] 
+				       then port="22" 
+				       fi
+				echo -n "Enter Username(Defualt root) : "
+				       read user
+				       if [[ $user == '' ]] 
+				       then user="root" 
+				echo -n "Enter Password : "
+					read pass
+				       fi
 
-	else
-	        if [[ $2 == '' ]]
-	        then port="22"
-		fi
-	        if [[ $3 == '' ]] 
-	        then user="root" 
-	        fi
-	        scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
-		ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
-	fi
+		                scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
+		                ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
+				#sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -v -p $port
+
+			else
+			        if [[ $2 == '' ]]
+			        then port="22"
+				fi
+			        if [[ $3 == '' ]] 
+			        then user="root" 
+			        fi
+				echo -n "Enter Password : "
+                                        read pass
+
+			        scp -P$port ~/.zshrc $user@$ip:/tmp/.bashrc_temp
+				ssh -p$port -t $user@$ip "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
+				#sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -v -p $port
+
+			fi
+#	fi
 }
 
 #End
