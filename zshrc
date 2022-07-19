@@ -171,7 +171,7 @@ function logconsol-tail {
 }
 
 
-#check sshpass
+#check app install
 function ch {
 
 	#checke=$(sudo apt list --installed | grep -i $1 | grep -i installed | wc -l)
@@ -186,22 +186,74 @@ function ch {
 
 }
 #ssh with alias
+
+
+function dia {
+
+
+#!/bin/bash
+# yesnobox.sh - An inputbox demon shell script
+OUTPUT="/tmp/input.txt"
+# create empty file>$OUTPUT
+
+function sayhello(){
+local n=${@-"anonymous person"}
+#display it
+dialog --title "Hello" --clear --msgbox "Hello ${n}, let us be friends!" 10 41
+}
+
+
+trap "rm $OUTPUT; exit" SIGHUP SIGINT SIGTERM
+
+# show an inputbox
+dialog --title "SSH"  --backtitle "SSH With Alias"  --inputbox "Enter IP : " 8 60 2>$OUTPUT
+
+# get respose
+
+respose=$?
+
+# get data stored in $OUPUT using input redirection
+
+IP=$(<$OUTPUT)
+
+dialog --title "SSH"  --backtitle "SSH With Alias"  --inputbox "Enter Port : " 8 60 2>$OUTPUT
+respose=$?
+PORT=$(<$OUTPUT)
+
+# make a decsion
+case $respose in
+0) sayhello ${IP} ;;
+
+1) echo "Cancel pressed." ;;
+
+255) echo "[ESC] key pressed."
+
+esac
+# remove $OUTPUT file
+rm $OUTPUT
+
+
+
+}
+
+
+
 function ss {
 
 # checke=$(sudo apt list --installed | grep -i sshpass | grep -i installed | wc -l)
 # checke=$(ps -aux | grep -i sshpass | wc -l)
-#checke=$(dpkg -l | grep -i sshpass | wc -l)
-#        if [[ $checke == "0" ]]
-#        then
-#                echo -n "sshpass Not Installed. "
-#		echo -n "For Install Press Enter. "
-#		echo -n "For Cancel Install press q & Enter : "
-#		read inst
-#			if [[ $inst == "" ]]
-#			then
-#				sudo apt install sshpass
-#			fi
-#	else
+checke=$(dpkg -l | grep -i sshpass | wc -l)
+        if [[ $checke == "0" ]]
+        then
+                echo -n "sshpass Not Installed. "
+		echo -n "For Install Press Enter. "
+		echo -n "For Cancel Install press q & Enter : "
+		read inst
+			if [[ $inst == "" ]]
+			then
+				sudo apt install sshpass
+			fi
+	else
 
 			ip=$1
 			port=$2
@@ -241,7 +293,7 @@ function ss {
 				sshpass -p $pass ssh -o StrictHostKeyChecking=no -p$port -t $user@$ip -v "bash --rcfile /tmp/.bashrc_temp ; rm /tmp/.bashrc_temp"
 
 			fi
-#	fi
+	fi
 }
 
 #End
