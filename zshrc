@@ -188,7 +188,17 @@ function ch {
 #ssh with alias
 
 
+function men {
+
+dialog --menu "Choose one:" 10 30 3 1 red 2 green 3 blue
+
+
+echo $?
+
+}
+
 function dia {
+
 
 
 #!/bin/bash
@@ -196,11 +206,11 @@ function dia {
 OUTPUT="/tmp/input.txt"
 # create empty file>$OUTPUT
 
-function sayhello(){
-local n=${@-"anonymous person"}
-#display it
-dialog --title "Hello" --clear --msgbox "Hello ${n}, let us be friends!" 10 41
-}
+	function sayhello(){
+	local n=${@-"anonymous person"}
+	#display it
+	dialog --title "Hello" --clear --msgbox "Hello ${n}, let us be friends!" 10 41
+	}
 
 
 trap "rm $OUTPUT; exit" SIGHUP SIGINT SIGTERM
@@ -222,7 +232,7 @@ PORT=$(<$OUTPUT)
 
 # make a decsion
 case $respose in
-0) sayhello ${IP} ;;
+0) sayhello ${IP} ${PORT} ;;
 
 1) echo "Cancel pressed." ;;
 
